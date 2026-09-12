@@ -2,3 +2,5 @@ coordination.log.md
 EthanToDo.md
 design-decisions.md
 future_directions.md
+.DS_Store
+__pycache__/
