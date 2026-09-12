@@ -7,8 +7,8 @@
     "source_zip_sha256": "72297163d4c7e34ce6f97bdbc929eafe56231f9c76b93bb5b554b52fd631932f",
     "weight": "PWSSWGT / 10000 (four implied decimal places)"
   },
-  "population": "California civilian noninstitutional U.S. citizens age 18 or older, November 2020",
-  "population_role": "Proxy for voting-eligible adults, not an exact legal-eligibility count",
+  "population": "California civilian noninstitutional U.S. citizens age 18 or older who reported voting in the November 2020 election",
+  "population_role": "Reported voters. Self-reported participation, not a validated vote record or a legal-eligibility count",
   "filters": {
     "HRINTSTA": 1,
     "GESTFIPS": 6,
@@ -19,99 +19,114 @@
       2,
       3,
       4
-    ]
+    ],
+    "PES1": 1
   },
-  "unweighted_cps_count": 6499,
-  "population_estimate": 25946400.1379,
-  "published_table_check": {
-    "table": "Table 4a, California total citizen population",
-    "published_thousands": 25946,
-    "computed_population_estimate": 25946400.1379,
-    "difference_persons_from_published_rounded_thousands": 400.13789999857545
+  "unweighted_cps_count": 4263,
+  "population_estimate": 16893487.7694,
+  "citizen_adult_reference": {
+    "unweighted_cps_count": 6499,
+    "population_estimate": 25946400.1379,
+    "reported_turnout_rate": 0.6510917768790446
   },
+  "published_table_checks": [
+    {
+      "table": "Table 4a, California total voted",
+      "published_thousands": 16893,
+      "computed_population_estimate": 16893487.7694,
+      "difference_persons_from_published_rounded_thousands": 487.7694000005722
+    },
+    {
+      "table": "Table 4a, California total citizen population",
+      "published_thousands": 25946,
+      "computed_population_estimate": 25946400.1379,
+      "difference_persons_from_published_rounded_thousands": 400.13789999857545
+    }
+  ],
   "category_mapping": {
     "age_group": "PRTAGE: 18-29, 30-44, 45-64, 65+; topcoded 80 and 85 remain 65+",
     "sex": "PESEX: 1 male; 2 female; source records sex, not gender identity",
     "race_ethnicity": "PEHSPNON=1 Hispanic any race. Otherwise PTDTRACE: 1 White alone, 2 Black alone, 4 Asian alone, all remaining codes nh_other (including multiracial).",
-    "education": "PEEDUCA 31-39 hs_or_less; 40-42 some_college_or_associate; 43-46 bachelors_or_higher"
+    "education": "PEEDUCA 31-39 hs_or_less; 40-42 some_college_or_associate; 43-46 bachelors_or_higher",
+    "voting": "PES1=1 reported voting. Codes 2, -2, -3, and -9 are excluded, matching the published Total voted column."
   },
   "margins": {
     "age_group": {
       "18-29": {
-        "proportion": 0.22758930994340001,
-        "population_estimate": 5905123.3029,
-        "unweighted_cps_count": 1326
+        "proportion": 0.19513879619762398,
+        "population_estimate": 3296574.8669,
+        "unweighted_cps_count": 735
       },
       "30-44": {
-        "proportion": 0.24673438470367096,
-        "population_estimate": 6401869.0733,
-        "unweighted_cps_count": 1558
+        "proportion": 0.23792491846950056,
+        "population_estimate": 4019381.7002,
+        "unweighted_cps_count": 986
       },
       "45-64": {
-        "proportion": 0.30729556896617416,
-        "population_estimate": 7973213.793,
-        "unweighted_cps_count": 2044
+        "proportion": 0.3275796073457333,
+        "population_estimate": 5533962.0902,
+        "unweighted_cps_count": 1414
       },
       "65+": {
-        "proportion": 0.21838073638675487,
-        "population_estimate": 5666193.9687,
-        "unweighted_cps_count": 1571
+        "proportion": 0.23935667798714214,
+        "population_estimate": 4043569.1121,
+        "unweighted_cps_count": 1128
       }
     },
     "sex": {
       "male": {
-        "proportion": 0.4848505897827484,
-        "population_estimate": 12580127.4096,
-        "unweighted_cps_count": 3102
+        "proportion": 0.4742410281914535,
+        "population_estimate": 8011585.0095,
+        "unweighted_cps_count": 1995
       },
       "female": {
-        "proportion": 0.5151494102172516,
-        "population_estimate": 13366272.7283,
-        "unweighted_cps_count": 3397
+        "proportion": 0.5257589718085465,
+        "population_estimate": 8881902.7599,
+        "unweighted_cps_count": 2268
       }
     },
     "race_ethnicity": {
       "hispanic": {
-        "proportion": 0.3201011428814037,
-        "population_estimate": 8305472.3378,
-        "unweighted_cps_count": 1923
+        "proportion": 0.26867164249062603,
+        "population_estimate": 4538801.1064,
+        "unweighted_cps_count": 1045
       },
       "nh_white": {
-        "proportion": 0.4503432006905649,
-        "population_estimate": 11684784.8845,
-        "unweighted_cps_count": 3123
+        "proportion": 0.51564619486562,
+        "population_estimate": 8711062.6863,
+        "unweighted_cps_count": 2331
       },
       "nh_black": {
-        "proportion": 0.06399078240818268,
-        "population_estimate": 1660330.4455,
-        "unweighted_cps_count": 384
+        "proportion": 0.06456030079090863,
+        "population_estimate": 1090648.6518,
+        "unweighted_cps_count": 252
       },
       "nh_asian": {
-        "proportion": 0.1415271023565278,
-        "population_estimate": 3672118.8281,
-        "unweighted_cps_count": 946
+        "proportion": 0.1286149671316315,
+        "population_estimate": 2172755.3742,
+        "unweighted_cps_count": 559
       },
       "nh_other": {
-        "proportion": 0.024037771663320974,
-        "population_estimate": 623693.642,
-        "unweighted_cps_count": 123
+        "proportion": 0.022506894721213873,
+        "population_estimate": 380219.9507,
+        "unweighted_cps_count": 76
       }
     },
     "education": {
       "hs_or_less": {
-        "proportion": 0.34805073156213595,
-        "population_estimate": 9030663.5494,
-        "unweighted_cps_count": 2234
+        "proportion": 0.25873811841373495,
+        "population_estimate": 4370989.2389,
+        "unweighted_cps_count": 1088
       },
       "some_college_or_associate": {
-        "proportion": 0.2939262278723666,
-        "population_estimate": 7626327.5194,
-        "unweighted_cps_count": 1881
+        "proportion": 0.31092241735979625,
+        "population_estimate": 5252564.0549,
+        "unweighted_cps_count": 1302
       },
       "bachelors_or_higher": {
-        "proportion": 0.35802304056549744,
-        "population_estimate": 9289409.0691,
-        "unweighted_cps_count": 2384
+        "proportion": 0.43033946422646885,
+        "population_estimate": 7269934.4756,
+        "unweighted_cps_count": 1873
       }
     }
   },
@@ -119,6 +134,8 @@
     "These are weighted CPS survey estimates, not exact population counts; small categories have sampling error.",
     "Citizen adults are a proxy for voting eligibility. CPS excludes institutional residents and this civilian filter excludes Armed Forces; it does not identify every legal disqualification.",
     "The marginal category boundaries are demonstration choices rather than a universal polling standard.",
-    "Do not treat marginal targets as a known joint demographic distribution."
+    "Do not treat marginal targets as a known joint demographic distribution.",
+    "Voting is self-reported. Survey respondents overstate voting, and CPS does not validate reports against voter files.",
+    "People who did not answer PES1 are excluded from the voted total rather than counted as nonvoters, following the published table."
   ]
 }
