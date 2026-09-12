@@ -1,7 +1,7 @@
 # Project scope
 
 - Aim for a small, self-contained interactive polling demonstration that fits roughly 2–3 hours of total work. Do not expand scope without agreement.
-- The proposed MVP lets users change individual respondents' votes or subgroup membership and observe topline and subgroup results, with a control to enable or disable reraking.
+- The proposed MVP lets users change individual respondents' votes or subgroup membership and observe topline and subgroup results, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights.
 - Investigate how small subgroup samples and weighting can make subgroup results sensitive while topline results remain relatively stable. Treat the statistical mechanism as something to validate, not a predetermined conclusion.
 - Explainers and a challenge/game mode are stretch goals, secondary to the agreed MVP.
 
