@@ -6,7 +6,8 @@
 - Weighting is a secondary learning layer, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights. Editing demographic membership is a secondary feature.
 - Investigate how small subgroup samples and weighting can make subgroup results sensitive while topline results remain relatively stable. Treat the statistical mechanism as something to validate, not a predetermined conclusion.
 - Explainers and a challenge/game mode are stretch goals, secondary to the agreed MVP.
-- Voting scope is the 2020 presidential election only. The sample and raking targets should represent California adults eligible to vote; document any use of citizen adults as a proxy. Keep nonvoting and missing responses distinguishable from candidate choices.
+- The MVP is an illustrative binary D/R toy model, using California CES 2020 presidential-preference records as source material. Use D and R as the displayed outcome labels. A binary sample retains source Biden/Trump preferences, mapped to D/R; do not invent candidate choices for excluded responses.
+- Realistic population sampling and alignment with real-world election results are deferred. Treat any California demographic targets used in the toy as reference calibration targets, without claiming that a preference-filtered sample represents all eligible adults. Preserve source provenance and document exclusions.
 
 # Collaboration and approval
 
