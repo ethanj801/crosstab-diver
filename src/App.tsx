@@ -5,6 +5,7 @@ import { Filters } from './components/Filters';
 import { Respondents, RespondentDetails } from './components/Respondents';
 import { compare, initialState, matches, PAGE_SIZE, updateState } from './poll';
 import type { Respondent, State, Action } from './poll';
+import { subgroupLabel } from './labels';
 
 const records = prepared.respondents as Respondent[];
 const reducer = (state: State, action: Action) => updateState(records, state, action);
@@ -17,16 +18,17 @@ export default function App() {
   const hasFilters = Object.values(state.filters).some(Boolean);
   return <main className="poll-app">
     <header className="page-header">
-      <h1>Poll crosstabs</h1>
+      <h1>Crosstab Investigator</h1>
       <div className="header-actions">
         <label className="raking-control"><input type="checkbox" role="switch" checked={state.weighted}
           onChange={() => dispatch({ type: 'weighting' })} /><span className="switch-track" aria-hidden="true" /><span>Raking</span></label>
         <button type="button" className="reset" disabled={Object.keys(state.edits).length === 0}
-          onClick={() => dispatch({ type: 'reset' })}>Reset preferences</button>
+          onClick={() => dispatch({ type: 'reset' })}>Reset</button>
       </div>
     </header>
     <Filters filters={state.filters} dispatch={dispatch} />
     <Comparison whole={compare(records, state.edits, state.weighted)}
+      subgroupName={subgroupLabel(state.filters)}
       subgroup={hasFilters ? compare(filtered, state.edits, state.weighted) : null} />
     <div className="editor">
       <Respondents records={visible} count={filtered.length} state={state} dispatch={dispatch} />

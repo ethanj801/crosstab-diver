@@ -25,7 +25,7 @@ function ResultRow({ label, result, subgroup = false }: { label: string; result:
   </div>;
 }
 
-export function Comparison({ whole, subgroup }: { whole: Result; subgroup: Result | null }) {
+export function Comparison({ whole, subgroup, subgroupName }: { whole: Result; subgroup: Result | null; subgroupName: string }) {
   return <section className="comparison" aria-label="Margin">
     <div className="comparison-head" aria-hidden="true">
       <span />
@@ -36,7 +36,7 @@ export function Comparison({ whole, subgroup }: { whole: Result; subgroup: Resul
     </div>
     <div className="results" aria-live="polite" aria-atomic="true">
       <ResultRow label="Whole sample" result={whole} />
-      {subgroup ? <ResultRow label="Selected subgroup" result={subgroup} subgroup /> : <div className="result-placeholder" aria-hidden="true" />}
+      {subgroup ? <ResultRow label={subgroupName} result={subgroup} subgroup /> : <div className="result-placeholder" aria-hidden="true" />}
     </div>
   </section>;
 }

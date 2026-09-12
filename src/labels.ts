@@ -1,4 +1,4 @@
-import type { Dimension } from './poll';
+import type { Dimension, Filters } from './poll';
 
 export const FILTERS: { dimension: Dimension; label: string; options: [string, string][] }[] = [
   { dimension: 'race_ethnicity', label: 'Race / ethnicity', options: [
@@ -19,7 +19,12 @@ export function categoryLabel(dimension: Dimension, value: string) {
   return FILTERS.find(f => f.dimension === dimension)!.options.find(([key]) => key === value)![1];
 }
 
-export function recordLabel(number: number) { return `Record ${String(number).padStart(3, '0')}`; }
+export function subgroupLabel(filters: Filters) {
+  return FILTERS.filter(({ dimension }) => filters[dimension])
+    .map(({ dimension }) => categoryLabel(dimension, filters[dimension])).join(' · ');
+}
+
+export function recordLabel(number: number) { return `Voter ${String(number).padStart(3, '0')}`; }
 export function direction(value: number | null) {
   return value === null || Math.abs(value) < 0.005 ? '' : value > 0 ? 'd' : 'r';
 }

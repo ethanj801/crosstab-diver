@@ -46,9 +46,9 @@ h1 { font-size: 28px; font-weight: 650; letter-spacing: -0.025em; }
 .filter select { display: block; width: 100%; height: 39px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--ink); padding: 0 10px; }
 .filter select:hover { border-color: #9ba591; }
 .comparison { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding-top: 13px; }
-.comparison-head, .result-row { display: grid; grid-template-columns: 165px minmax(170px,1fr) 89px 102px 160px; gap: 20px; align-items: center; }
+.comparison-head, .result-row { display: grid; grid-template-columns: 220px minmax(170px,1fr) 89px 102px 160px; gap: 20px; align-items: center; }
 .comparison-head { color: var(--muted); font-size: 11px; min-height: 29px; }
-.comparison-head > span:nth-last-child(-n+3) { text-align: right; }
+.comparison-head > span:nth-last-child(-n+3) { text-align: right; font-size: 14px; font-weight: 600; color: var(--ink); }
 .chart-heading { position: relative; }
 .chart-heading > span { display: none; }
 .axis-labels { display: flex; justify-content: space-between; }
@@ -56,14 +56,14 @@ h1 { font-size: 28px; font-weight: 650; letter-spacing: -0.025em; }
 .legend-original, .legend-current { display: inline-block; vertical-align: middle; margin: -1px 5px 0 0; width: 7px; height: 7px; border: 1px solid var(--ink); border-radius: 50%; }
 .legend-current { background: var(--ink); }
 .result-row { min-height: 76px; }
-.subgroup-result { border-top: 1px solid #e7e9e1; }
+.subgroup-result { border-top: 1px solid #e7e9e1; min-height: 112px; padding: 8px 0; }
 .result-identity h2 { font-size: 14px; font-weight: 600; }
 .record-count { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
 .record-count strong { color: var(--ink); font-size: 17px; font-weight: 600; }
 .result-original { font-size: 13px; text-align: right; }
 .result-current { font-size: 19px; font-weight: 600; text-align: right; white-space: nowrap; }
 .result-change { font-size: 15px; text-align: right; font-weight: 600; white-space: nowrap; }
-.result-placeholder { height: 76px; }
+.result-placeholder { height: 112px; }
 .d { color: var(--d); }
 .r { color: var(--r); }
 .margin-track { position: relative; height: 24px; }
@@ -113,7 +113,7 @@ h1 { font-size: 28px; font-weight: 650; letter-spacing: -0.025em; }
 .weight strong { font-size: 20px; color: var(--ink); font-weight: 550; }
 @media (max-width: 1100px) {
   .poll-app { padding: 24px 28px; }
-  .comparison-head, .result-row { grid-template-columns: 145px minmax(150px,1fr) 84px 95px 158px; gap: 16px; }
+  .comparison-head, .result-row { grid-template-columns: 220px minmax(150px,1fr) 84px 95px 158px; gap: 16px; }
   .editor { grid-template-columns: minmax(0,1fr) 230px; gap: 24px; }
   .people { column-gap: 7px; }
   .person { width: 36px; height: 36px; }
