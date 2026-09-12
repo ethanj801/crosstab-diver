@@ -72,7 +72,7 @@ h1 { font-size: 28px; font-weight: 650; letter-spacing: -0.025em; }
 .margin-movement { position: absolute; width: 100%; height: 3px; left: 0; top: 10px; background: currentColor; transform-origin: left center; transition: transform 180ms cubic-bezier(.16,1,.3,1); }
 .marker { position: absolute; transform: translateX(-50%); border-radius: 50%; }
 .marker-original { width: 14px; height: 14px; top: 5px; background: var(--paper); border: 1.5px solid var(--ink); }
-.marker-current { width: 6px; height: 6px; top: 9px; background: currentColor; }
+.marker-current { width: 12px; height: 12px; top: 6px; background: currentColor; }
 .editor { display: grid; grid-template-columns: minmax(0,1fr) 248px; gap: 32px; margin-top: 28px; }
 .respondents { min-width: 0; }
 .people { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); grid-auto-rows: 42px; gap: 16px 10px; min-height: 216px; align-content: start; justify-items: start; padding: 4px; }
