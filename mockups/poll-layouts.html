@@ -1,0 +1,128 @@
+<div id="poll-layout-sketches" aria-label="Two exploratory polling interface sketches with illustrative data">
+  <style>
+    #poll-layout-sketches { --paper: light-dark(#fffefb,#20211f); --ink: light-dark(#242823,#eceee8); --muted: light-dark(#62675f,#acb3a6); --line: light-dark(#d9ddd3,#474c43); --soft: light-dark(#f1f3ed,#2d322a); --blue: light-dark(#315aa0,#9cbaf0); --bluewash: light-dark(#dfe8f7,#2d4265); --red: light-dark(#a64839,#f1b0a5); --redwash: light-dark(#f6e2dc,#603c35); color:var(--ink); font:15px/1.45 system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+    #poll-layout-sketches * { box-sizing:border-box; }
+    #poll-layout-sketches .sketch { background:var(--paper); border:1px solid var(--line); margin:0 0 30px; }
+    #poll-layout-sketches .sketch-head { padding:20px 24px; border-bottom:1px solid var(--line); display:flex; gap:16px; align-items:baseline; justify-content:space-between; flex-wrap:wrap; }
+    #poll-layout-sketches h2 { font:600 20px/1.25 system-ui,sans-serif; margin:0; }
+    #poll-layout-sketches .muted { color:var(--muted); }
+    #poll-layout-sketches .small { font-size:12px; }
+    #poll-layout-sketches .content { padding:24px; }
+    #poll-layout-sketches .filters { display:flex; gap:12px; flex-wrap:wrap; padding-bottom:22px; }
+    #poll-layout-sketches .filter { min-width:150px; flex:1; }
+    #poll-layout-sketches .filter-name { display:block; font-size:12px; color:var(--muted); margin-bottom:5px; }
+    #poll-layout-sketches .filter-value { border:1px solid var(--line); padding:8px 10px; border-radius:4px; display:block; background:var(--paper); }
+    #poll-layout-sketches .comparison { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:15px 0 17px; }
+    #poll-layout-sketches .comparison-heading { display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; justify-content:space-between; margin-bottom:15px; }
+    #poll-layout-sketches .result { display:grid; grid-template-columns:minmax(140px,1fr) minmax(100px,1.2fr) 80px 142px; gap:14px; align-items:center; padding:7px 0; }
+    #poll-layout-sketches .result-name { line-height:1.35; }
+    #poll-layout-sketches .count { display:block; color:var(--muted); font-size:12px; }
+    #poll-layout-sketches .value { text-align:right; font-size:23px; font-weight:600; }
+    #poll-layout-sketches .delta { text-align:right; font-weight:600; color:var(--blue); }
+    #poll-layout-sketches .delta small { display:block; font-size:11px; font-weight:400; }
+    #poll-layout-sketches .track { position:relative; height:18px; background:var(--soft); }
+    #poll-layout-sketches .fill { position:absolute; left:0; top:0; height:100%; width:var(--share); background:var(--bluewash); border-right:2px solid var(--blue); }
+    #poll-layout-sketches .original { position:absolute; top:-3px; bottom:-3px; width:0; border-left:1px dashed var(--ink); left:50%; }
+    #poll-layout-sketches .axis { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); padding-top:4px; }
+    #poll-layout-sketches .editor { display:grid; grid-template-columns:minmax(0,1fr) 225px; gap:28px; margin-top:23px; }
+    #poll-layout-sketches .section-name { margin:0 0 15px; font-weight:600; }
+    #poll-layout-sketches .people { display:grid; grid-template-columns:repeat(5,36px); gap:12px; width:max-content; max-width:100%; }
+    #poll-layout-sketches .person { width:36px; height:36px; border:1px solid var(--blue); background:var(--bluewash); border-radius:50%; color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:650; }
+    #poll-layout-sketches .person.trump { border-color:var(--red); background:var(--redwash); color:var(--red); }
+    #poll-layout-sketches .person.selected { outline:2px solid var(--ink); outline-offset:4px; }
+    #poll-layout-sketches .legend { margin-top:18px; display:flex; flex-wrap:wrap; gap:10px 18px; font-size:12px; color:var(--muted); }
+    #poll-layout-sketches .legend b { margin-right:4px; }
+    #poll-layout-sketches .inspector { border-left:1px solid var(--line); padding-left:22px; }
+    #poll-layout-sketches dl { margin:12px 0 18px; font-size:12px; }
+    #poll-layout-sketches dt { color:var(--muted); margin-top:7px; }
+    #poll-layout-sketches dd { margin:0; }
+    #poll-layout-sketches .edit-state { display:flex; align-items:center; gap:12px; font-weight:600; }
+    #poll-layout-sketches .candidate { padding:7px 12px; border:1px solid var(--line); border-radius:4px; }
+    #poll-layout-sketches .candidate.after { color:var(--blue); border-color:var(--blue); background:var(--bluewash); }
+    #poll-layout-sketches .old { color:var(--muted); text-decoration:line-through; }
+    #poll-layout-sketches .footer { padding:15px 24px; border-top:1px solid var(--line); color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; }
+    #poll-layout-sketches .with-overview { display:grid; grid-template-columns:200px minmax(0,1fr); }
+    #poll-layout-sketches .overview { padding:24px 18px; border-right:1px solid var(--line); background:var(--soft); }
+    #poll-layout-sketches .overview .section-name { margin-bottom:5px; }
+    #poll-layout-sketches .mini-people { display:grid; grid-template-columns:repeat(20,4px); gap:4px; margin:18px 0 14px; }
+    #poll-layout-sketches .mini-person { width:4px; height:4px; border-radius:50%; background:var(--muted); opacity:.22; }
+    #poll-layout-sketches .mini-person.in-group { background:var(--ink); opacity:1; }
+    #poll-layout-sketches .selection { padding-top:18px; margin-top:18px; border-top:1px solid var(--line); font-size:13px; }
+    #poll-layout-sketches .selection p { margin:4px 0; }
+    #poll-layout-sketches .dense { grid-template-columns:repeat(6,32px); gap:11px; }
+    #poll-layout-sketches .dense .person { width:32px; height:32px; }
+    #poll-layout-sketches .with-overview .result { grid-template-columns:minmax(96px,1fr) minmax(70px,1fr) 75px 104px; gap:10px; }
+    #poll-layout-sketches .with-overview .editor { grid-template-columns:minmax(0,1fr) 180px; gap:20px; }
+    #poll-layout-sketches .with-overview .inspector { padding-left:18px; }
+    #poll-layout-sketches .paging { margin-top:18px; font-size:12px; color:var(--muted); display:flex; gap:20px; }
+    @media(max-width:800px) { #poll-layout-sketches .with-overview { grid-template-columns:160px minmax(0,1fr); } #poll-layout-sketches .overview { padding:20px 12px; } #poll-layout-sketches .mini-people { gap:3px; } #poll-layout-sketches .with-overview .editor { grid-template-columns:1fr; } #poll-layout-sketches .with-overview .inspector { padding:15px 0 0; border-left:0; border-top:1px solid var(--line); } }
+    @media(max-width:600px) { #poll-layout-sketches .sketch-head,#poll-layout-sketches .content { padding:18px; } #poll-layout-sketches .editor { grid-template-columns:1fr; } #poll-layout-sketches .inspector { border-left:0; border-top:1px solid var(--line); padding:16px 0 0; } #poll-layout-sketches .result,#poll-layout-sketches .with-overview .result { grid-template-columns:1fr 74px 110px; gap:8px; } #poll-layout-sketches .result-chart { display:none; } #poll-layout-sketches .with-overview { grid-template-columns:1fr; } #poll-layout-sketches .overview { border-right:0; border-bottom:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr; gap:14px; } #poll-layout-sketches .mini-people { margin:0; } #poll-layout-sketches .selection { margin:12px 0 0; padding:12px 0 0; } #poll-layout-sketches .value { font-size:20px; } }
+  </style>
+
+  <section class="sketch" aria-label="Concept A: filters, a small intersection, and all selected records visible">
+    <header class="sketch-head"><h2>A · Focused subgroup</h2><span class="muted small">California 2020 · Illustrative data</span></header>
+    <div class="content">
+      <div class="filters" aria-label="Proposed subgroup filter region">
+        <div class="filter"><span class="filter-name">Race / ethnicity</span><span class="filter-value">Hispanic</span></div>
+        <div class="filter"><span class="filter-name">Age</span><span class="filter-value">18–29</span></div>
+        <div class="filter"><span class="filter-name">Education</span><span class="filter-value">All</span></div>
+        <div class="filter"><span class="filter-name">Sex</span><span class="filter-value">All</span></div>
+      </div>
+      <div class="comparison" aria-label="Biden share changes from 50 to 55 percent in the subgroup, and from 50 to 50.17 percent overall">
+        <div class="comparison-heading"><strong>Biden preference</strong><span class="small muted">Raking off · Original: 50% in both groups</span></div>
+        <div class="result"><div class="result-name">Selected subgroup<span class="count">20 records</span></div><div class="result-chart"><div class="track"><span class="fill" style="--share:55%"></span><span class="original"></span></div><div class="axis"><span>0%</span><span>100%</span></div></div><div class="value">55%</div><div class="delta">+5.00<small>percentage points</small></div></div>
+        <div class="result"><div class="result-name">Whole sample<span class="count">600 records</span></div><div class="result-chart"><div class="track"><span class="fill" style="--share:50.1667%"></span><span class="original"></span></div><div class="axis"><span>0%</span><span>100%</span></div></div><div class="value">50.17%</div><div class="delta">+0.17<small>percentage points</small></div></div>
+      </div>
+      <div class="editor">
+        <div><div class="section-name">Hispanic · Ages 18–29 <span class="muted small">20 / 600</span></div><div class="people" id="small-group-marks" role="img" aria-label="20 stable respondent positions: 11 Biden, 9 Trump. Record 8 is the edited respondent."></div><div class="legend"><span><b>B</b> Biden</span><span><b>T</b> Trump</span><span>Outlined: selected</span></div></div>
+        <aside class="inspector" aria-label="Selected respondent details"><strong>Record 008</strong><dl><dt>Race / ethnicity</dt><dd>Hispanic</dd><dt>Age · Sex</dt><dd>24 · Female</dd><dt>Education</dt><dd>Some college / associate</dd></dl><div class="small muted" style="margin-bottom:7px">Presidential preference</div><div class="edit-state"><span class="candidate old">Trump</span><span aria-hidden="true">→</span><span class="candidate after">Biden</span></div></aside>
+      </div>
+    </div>
+    <footer class="footer"><span>1 preference edit · Record 008 stays in position</span><span>Undo · Reset</span></footer>
+  </section>
+
+  <section class="sketch" aria-label="Concept B: compact whole-sample overview and a paged large subgroup">
+    <header class="sketch-head"><h2>B · Whole-sample context</h2><span class="muted small">California 2020 · Illustrative data</span></header>
+    <div class="with-overview">
+      <aside class="overview"><div><div class="section-name">600 records</div><div class="small muted">240 selected</div><div class="selection"><span class="filter-name">Race / ethnicity</span><p><strong>Non-Hispanic White</strong></p><p class="muted small">Age · Education · Sex: All</p></div></div><div><div class="mini-people" id="overview-marks" role="img" aria-label="600 tiny marks, 240 highlighted as members of the selected subgroup"></div><span class="small muted">Dark: selected subgroup</span></div></aside>
+      <div class="content">
+        <div class="comparison" aria-label="Biden share changes from 50 to 50.42 percent in the subgroup, and from 50 to 50.17 percent overall">
+          <div class="comparison-heading"><strong>Biden preference</strong><span class="small muted">Raking off · Original: 50%</span></div>
+          <div class="result"><div class="result-name">Selected subgroup<span class="count">240 records</span></div><div class="result-chart"><div class="track"><span class="fill" style="--share:50.4167%"></span><span class="original"></span></div><div class="axis"><span>0%</span><span>100%</span></div></div><div class="value">50.42%</div><div class="delta">+0.42<small>percentage points</small></div></div>
+          <div class="result"><div class="result-name">Whole sample<span class="count">600 records</span></div><div class="result-chart"><div class="track"><span class="fill" style="--share:50.1667%"></span><span class="original"></span></div><div class="axis"><span>0%</span><span>100%</span></div></div><div class="value">50.17%</div><div class="delta">+0.17<small>percentage points</small></div></div>
+        </div>
+        <div class="editor">
+          <div><div class="section-name">Selected respondents</div><div class="people dense" id="large-group-marks" role="img" aria-label="First 48 records of a 240-record subgroup, with one edited record remaining in the same position"></div><div class="paging"><span>1–48 of 240</span><span>Previous · Next</span></div><div class="legend"><span><b>B</b> Biden</span><span><b>T</b> Trump</span></div></div>
+          <aside class="inspector" aria-label="Selected respondent details"><strong>Record 008</strong><dl><dt>Race / ethnicity</dt><dd>Non-Hispanic White</dd><dt>Age · Sex</dt><dd>54 · Male</dd><dt>Education</dt><dd>Bachelor’s or higher</dd></dl><div class="small muted" style="margin-bottom:7px">Presidential preference</div><div class="edit-state"><span class="old">Trump</span><span aria-hidden="true">→</span><span class="candidate after">Biden</span></div></aside>
+        </div>
+      </div>
+    </div>
+    <footer class="footer"><span>1 preference edit · Record 008 stays in position</span><span>Undo · Reset</span></footer>
+  </section>
+  <script>
+    (() => {
+      const root = document.getElementById('poll-layout-sketches');
+      function marks(id, count) {
+        const container = root.querySelector('#' + id);
+        for (let i=0; i<count; i++) {
+          const selected = i === 7;
+          const biden = i % 2 === 0 || selected;
+          const mark = document.createElement('span');
+          mark.className = 'person' + (biden ? '' : ' trump') + (selected ? ' selected' : '');
+          mark.textContent = biden ? 'B' : 'T';
+          mark.setAttribute('aria-hidden','true');
+          container.appendChild(mark);
+        }
+      }
+      marks('small-group-marks',20);
+      marks('large-group-marks',48);
+      const overview = root.querySelector('#overview-marks');
+      for (let i=0; i<600; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'mini-person' + (i % 5 < 2 ? ' in-group' : '');
+        dot.setAttribute('aria-hidden','true');
+        overview.appendChild(dot);
+      }
+    })();
+  </script>
+</div>
