@@ -4,3 +4,7 @@ design-decisions.md
 future_directions.md
 .DS_Store
 __pycache__/
+node_modules/
+dist/
+.impeccable/review/
+.playwright-mcp/
