@@ -1,7 +1,8 @@
 # Project scope
 
 - Aim for a small, self-contained interactive polling demonstration that fits roughly 2–3 hours of total work. Do not expand scope without agreement.
-- The proposed MVP lets users change individual respondents' votes or subgroup membership and observe topline and subgroup results, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights.
+- The core MVP is a populated main page where users change individual respondents' presidential preferences and compare subgroup changes with topline changes. Begin with direct interaction; tutorials and explainer popups are optional later additions.
+- Weighting is a secondary learning layer, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights. Editing demographic membership is a secondary feature.
 - Investigate how small subgroup samples and weighting can make subgroup results sensitive while topline results remain relatively stable. Treat the statistical mechanism as something to validate, not a predetermined conclusion.
 - Explainers and a challenge/game mode are stretch goals, secondary to the agreed MVP.
 - Voting scope is the 2020 presidential election only. The sample and raking targets should represent California adults eligible to vote; document any use of citizen adults as a proxy. Keep nonvoting and missing responses distinguishable from candidate choices.
@@ -19,4 +20,5 @@
 - Stage changes deliberately and make small, logical commits as work progresses. Do not include unrelated changes.
 - Never add AI attribution to commits: no AI co-author trailers, session links, generated-by lines, or other AI-authorship markers.
 - Maintain `coordination.log.md` as an append-only, gitignored coordination log. Append dated entries for decisions, status, validation, blockers, and open questions. Correct earlier entries by appending a correction, never by rewriting history.
+- `EthanToDo.md` is Ethan's gitignored checklist of things to do before submission. When Ethan starts wrapping up, finishing the project, or preparing to submit, read it and proactively remind him of outstanding items. Do not mark his review tasks complete without his confirmation.
 - Keep `AGENTS.md` as the canonical shared instruction file and `CLAUDE.md` as a relative symlink to it.
