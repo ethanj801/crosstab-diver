@@ -4,6 +4,7 @@
 - The proposed MVP lets users change individual respondents' votes or subgroup membership and observe topline and subgroup results, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights.
 - Investigate how small subgroup samples and weighting can make subgroup results sensitive while topline results remain relatively stable. Treat the statistical mechanism as something to validate, not a predetermined conclusion.
 - Explainers and a challenge/game mode are stretch goals, secondary to the agreed MVP.
+- Voting scope is the 2020 presidential election only. The sample and raking targets should represent California adults eligible to vote; document any use of citizen adults as a proxy. Keep nonvoting and missing responses distinguishable from candidate choices.
 
 # Collaboration and approval
 
