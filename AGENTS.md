@@ -1,6 +1,7 @@
 # Project scope
 
 - Aim for a small, self-contained interactive polling demonstration that fits roughly 2–3 hours of total work. Do not expand scope without agreement.
+- Target desktop and laptop browsers only. Phone/mobile layouts and touch-specific interaction support are outside the agreed scope.
 - The core MVP is a populated main page where users change individual respondents' presidential preferences and compare subgroup changes with topline changes. Begin with direct interaction; tutorials and explainer popups are optional later additions.
 - Weighting is a secondary learning layer, with a control to turn raking on or off. Raking off means unweighted results, not freezing previously calculated weights. Editing demographic membership is a secondary feature.
 - Investigate how small subgroup samples and weighting can make subgroup results sensitive while topline results remain relatively stable. Treat the statistical mechanism as something to validate, not a predetermined conclusion.
