@@ -17,6 +17,14 @@ MISSING = {"", "NA"}
 DIMENSIONS = ("age_group", "sex", "race_ethnicity", "education", "presidential_preference")
 EARLY_VOTE = {"1": "trump", "2": "biden", "3": "other", "4": "not_sure", "5": "did_not_vote"}
 PREFERENCE = {"1": "trump", "2": "biden", "3": "other", "4": "will_not_vote", "5": "not_sure"}
+MAJOR_PARTY = {"trump", "biden"}
+EXCLUDED_PREFERENCE = {
+    "other": "other_candidate_preference",
+    "not_sure": "undecided_presidential_preference",
+    "will_not_vote": "intends_not_to_vote",
+    "no_presidential_vote_reported_at_interview": "no_presidential_vote_at_interview",
+    "missing": "missing_presidential_preference",
+}
 REQUIRED = {"caseid", "inputstate", "cit1", "birthyr", "gender", "race", "hispanic", "educ", "commonweight", "CC20_364a", "CC20_364b"}
 
 
@@ -88,6 +96,9 @@ def load_pool(source):
                 raise ValueError("Duplicate CES source caseid")
             seen.add(row["caseid"])
             vote, vote_kind, vote_question = preference(row)
+            if vote not in MAJOR_PARTY:
+                exclusions[EXCLUDED_PREFERENCE[vote]] += 1
+                continue
             pool.append({
                 "source_caseid": row["caseid"], "state_fips": "06", "citizen": True,
                 "age_2020": age,
@@ -131,9 +142,10 @@ def main():
         sample = [{"id": f"ca2020-{i + 1:06d}", **row, "draw_probability": row["ces_commonweight"] / total_weight, "base_weight": 1.0} for i, row in enumerate(draws)]
         result = {
             "schema_version": 1, "sample_size": args.size, "seed": args.seed,
-            "population": "California citizen adults aged 18+; proxy for voting eligibility, not an eligibility determination",
+            "population": "California citizen adults aged 18+ who named Trump or Biden; proxy for voting eligibility, not an eligibility determination",
             "election": "2020 US presidential election",
-            "outcome": "Pre-election presidential preference, with reported early votes where available",
+            "outcome": "Pre-election Trump or Biden preference, with reported early votes where available",
+            "preference_restriction": "The pool keeps only Trump and Biden responses. Another candidate, undecided, an intention not to vote, and missing responses are removed before sampling and counted in source_exclusions.",
             "source_file": args.input.name, "source_sha256": hashlib.file_digest(args.input.open("rb"), "sha256").hexdigest(),
             "source_dataset_doi": "10.7910/DVN/E9N6PH",
             "source_weight": "commonweight", "source_pool_size": len(pool),
