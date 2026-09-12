@@ -8,7 +8,7 @@ function MarginTrack({ original, current }: Pick<Result, 'original' | 'current'>
     <span className="tie-line" />
     {original !== null && current !== null && <>
       <span className={`margin-movement ${direction(current - original)}`}
-        style={{ left: position(Math.min(original, current)), width: `${Math.abs(current - original) / 2}%` }} />
+        style={{ transform: `translateX(${position(Math.min(original, current))}) scaleX(${Math.abs(current - original) / 200})` }} />
       <span className="marker marker-original" style={{ left: position(original) }} />
       <span className={`marker marker-current ${direction(current)}`} style={{ left: position(current) }} />
     </>}
