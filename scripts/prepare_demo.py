@@ -8,7 +8,7 @@ import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "california-2020"
+DATA = ROOT / "data" / "georgia-2020"
 
 
 def rake(records, targets, *, tolerance=1e-8, max_iterations=1000):
@@ -58,6 +58,9 @@ def rake(records, targets, *, tolerance=1e-8, max_iterations=1000):
 
 def prepare(sample, target_data):
     records = sample["respondents"]
+    target_state = str(target_data["filters"]["GESTFIPS"]).zfill(2)
+    if records and {r["state_fips"] for r in records} != {target_state}:
+        raise ValueError("Sample and calibration targets must describe the same state.")
     if len({r["id"] for r in records}) != len(records):
         raise ValueError("Demo record IDs must be unique, including repeated source draws.")
     if any(r["presidential_preference"] not in ("biden", "trump") for r in records):
@@ -82,9 +85,11 @@ def prepare(sample, target_data):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sample", type=Path, default=DATA / "sample_600.json")
-    parser.add_argument("--targets", type=Path, default=DATA / "raking_targets_cps_nov2020.json")
-    parser.add_argument("--output", type=Path, default=DATA / "demo.json")
+    parser.add_argument("--targets", type=Path, help="default: raking_targets_cps_nov2020.json beside the sample")
+    parser.add_argument("--output", type=Path, help="default: demo.json beside the sample")
     args = parser.parse_args()
+    args.targets = args.targets or args.sample.with_name("raking_targets_cps_nov2020.json")
+    args.output = args.output or args.sample.with_name("demo.json")
     try:
         sample_bytes, target_bytes = args.sample.read_bytes(), args.targets.read_bytes()
         demo = prepare(json.loads(sample_bytes), json.loads(target_bytes))

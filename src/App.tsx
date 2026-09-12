@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import prepared from '../data/california-2020/demo.json';
+import prepared from '../data/georgia-2020/demo.json';
 import { Comparison } from './components/Comparison';
 import { Filters } from './components/Filters';
 import { Respondents, RespondentDetails } from './components/Respondents';

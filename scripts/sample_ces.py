@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw an equal-weight demo sample from the weighted California CES 2020 pool."""
+"""Draw an equal-weight demo sample from a weighted state CES 2020 pool."""
 
 import argparse
 import collections
@@ -13,6 +13,22 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# CES inputstate and CPS GESTFIPS both carry the state FIPS code.
+STATES = {
+    "AL": (1, "alabama"), "AK": (2, "alaska"), "AZ": (4, "arizona"), "AR": (5, "arkansas"),
+    "CA": (6, "california"), "CO": (8, "colorado"), "CT": (9, "connecticut"), "DE": (10, "delaware"),
+    "DC": (11, "district-of-columbia"), "FL": (12, "florida"), "GA": (13, "georgia"), "HI": (15, "hawaii"),
+    "ID": (16, "idaho"), "IL": (17, "illinois"), "IN": (18, "indiana"), "IA": (19, "iowa"),
+    "KS": (20, "kansas"), "KY": (21, "kentucky"), "LA": (22, "louisiana"), "ME": (23, "maine"),
+    "MD": (24, "maryland"), "MA": (25, "massachusetts"), "MI": (26, "michigan"), "MN": (27, "minnesota"),
+    "MS": (28, "mississippi"), "MO": (29, "missouri"), "MT": (30, "montana"), "NE": (31, "nebraska"),
+    "NV": (32, "nevada"), "NH": (33, "new-hampshire"), "NJ": (34, "new-jersey"), "NM": (35, "new-mexico"),
+    "NY": (36, "new-york"), "NC": (37, "north-carolina"), "ND": (38, "north-dakota"), "OH": (39, "ohio"),
+    "OK": (40, "oklahoma"), "OR": (41, "oregon"), "PA": (42, "pennsylvania"), "RI": (44, "rhode-island"),
+    "SC": (45, "south-carolina"), "SD": (46, "south-dakota"), "TN": (47, "tennessee"), "TX": (48, "texas"),
+    "UT": (49, "utah"), "VT": (50, "vermont"), "VA": (51, "virginia"), "WA": (53, "washington"),
+    "WV": (54, "west-virginia"), "WI": (55, "wisconsin"), "WY": (56, "wyoming"),
+}
 MISSING = {"", "NA"}
 DIMENSIONS = ("age_group", "sex", "race_ethnicity", "education", "presidential_preference")
 EARLY_VOTE = {"1": "trump", "2": "biden", "3": "other", "4": "not_sure", "5": "did_not_vote"}
@@ -42,6 +58,11 @@ def preference(row):
     cannot establish eventual election-day nonvoting: it is a response during
     the pre-election field period, and the questionnaire routes those cases to
     364b for a preference.
+
+    A reported vote in 364a takes precedence over 364b.  Two respondents
+    nationwide answered both items, so the questionnaire routing does not
+    guarantee that only one is present.  Both codes are retained in
+    source_codes for every sampled record.
     """
     early, intended = row["CC20_364a"], row["CC20_364b"]
     if early not in MISSING and early not in EARLY_VOTE:
@@ -49,8 +70,6 @@ def preference(row):
     if intended not in MISSING and intended not in PREFERENCE:
         raise ValueError(f"Unexpected CC20_364b code: {intended}")
     if early not in MISSING and early != "5":
-        if intended not in MISSING:
-            raise ValueError("Unexpected conflicting early-vote/preference routing")
         return EARLY_VOTE[early], "reported_early_vote", "CC20_364a"
     if intended not in MISSING:
         return PREFERENCE[intended], "pre_election_preference", "CC20_364b"
@@ -59,7 +78,7 @@ def preference(row):
     return "missing", "missing", None
 
 
-def load_pool(source):
+def load_pool(source, state):
     pool, exclusions = [], collections.Counter()
     seen = set()
     with source.open(newline="", encoding="utf-8-sig") as stream:
@@ -68,7 +87,7 @@ def load_pool(source):
         if missing_columns:
             raise ValueError(f"Missing columns: {sorted(missing_columns)}")
         for row in reader:
-            if row["inputstate"] != "6":
+            if row["inputstate"] != str(STATES[state][0]):
                 continue
             if row["cit1"] != "1":
                 exclusions["noncitizen" if row["cit1"] == "2" else "citizenship_unknown"] += 1
@@ -100,7 +119,7 @@ def load_pool(source):
                 exclusions[EXCLUDED_PREFERENCE[vote]] += 1
                 continue
             pool.append({
-                "source_caseid": row["caseid"], "state_fips": "06", "citizen": True,
+                "source_caseid": row["caseid"], "state_fips": f"{STATES[state][0]:02d}", "citizen": True,
                 "age_2020": age,
                 "age_group": "18-29" if age < 30 else "30-44" if age < 45 else "45-64" if age < 65 else "65+",
                 "sex": "male" if row["gender"] == "1" else "female",
@@ -112,7 +131,7 @@ def load_pool(source):
                 "ces_commonweight": weight,
             })
     if not pool:
-        raise ValueError("No eligible California source respondents")
+        raise ValueError(f"No eligible source respondents in {state}")
     return sorted(pool, key=lambda person: person["source_caseid"]), exclusions
 
 
@@ -130,19 +149,21 @@ def margins(rows, weighted):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=Path.home() / "Downloads/dataverse_files/CES20_Common_OUTPUT_vv.csv")
+    parser.add_argument("--state", choices=sorted(STATES), default="GA")
     parser.add_argument("--size", type=positive_int, default=600)
     parser.add_argument("--seed", type=int, default=2020)
-    parser.add_argument("--output", type=Path, help="default: data/california-2020/sample_<size>.json")
+    parser.add_argument("--output", type=Path, help="default: data/<state>-2020/sample_<size>.json")
     args = parser.parse_args()
     try:
-        pool, exclusions = load_pool(args.input)
+        pool, exclusions = load_pool(args.input, args.state)
         weights = [row["ces_commonweight"] for row in pool]
         total_weight = sum(weights)
         draws = random.Random(args.seed).choices(pool, weights=weights, k=args.size)
-        sample = [{"id": f"ca2020-{i + 1:06d}", **row, "draw_probability": row["ces_commonweight"] / total_weight, "base_weight": 1.0} for i, row in enumerate(draws)]
+        sample = [{"id": f"{args.state.lower()}2020-{i + 1:06d}", **row, "draw_probability": row["ces_commonweight"] / total_weight, "base_weight": 1.0} for i, row in enumerate(draws)]
         result = {
             "schema_version": 1, "sample_size": args.size, "seed": args.seed,
-            "population": "California citizen adults aged 18+ who named Trump or Biden; proxy for voting eligibility, not an eligibility determination",
+            "state": args.state, "state_fips": f"{STATES[args.state][0]:02d}",
+            "population": f"{STATES[args.state][1].replace(chr(45), chr(32)).title()} citizen adults aged 18+ who named Trump or Biden; proxy for voting eligibility, not an eligibility determination",
             "election": "2020 US presidential election",
             "outcome": "Pre-election Trump or Biden preference, with reported early votes where available",
             "preference_restriction": "The pool keeps only Trump and Biden responses. Another candidate, undecided, an intention not to vote, and missing responses are removed before sampling and counted in source_exclusions.",
@@ -153,12 +174,12 @@ def main():
             "sampling_method": "Independent draws with replacement, probability proportional to commonweight, from caseid-sorted source pool",
             "unique_source_respondents": len({row["source_caseid"] for row in sample}),
             "duplicate_draws": len(sample) - len({row["source_caseid"] for row in sample}),
-            "respondent_identity_note": "These are 600 resampled demo records, not 600 unique CES respondents; repeated source_caseid values retain distinct demo IDs.",
+            "respondent_identity_note": f"These are {args.size} resampled demo records, not {args.size} unique CES respondents; repeated source_caseid values retain distinct demo IDs.",
             "weight_usage": "Sampling already uses CES weights. Each draw starts with base_weight=1; ces_commonweight is provenance, not a second analysis weight.",
             "source_weighted_margins": margins(pool, True), "sample_unweighted_margins": margins(sample, False),
             "respondents": sample,
         }
-        output = args.output or ROOT / "data" / "california-2020" / f"sample_{args.size}.json"
+        output = args.output or ROOT / "data" / f"{STATES[args.state][1]}-2020" / f"sample_{args.size}.json"
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
         print(f"Wrote {len(sample)} draws ({result['unique_source_respondents']} unique CES respondents) from {len(pool)} source respondents to {output}")

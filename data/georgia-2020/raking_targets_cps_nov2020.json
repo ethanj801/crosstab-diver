@@ -7,11 +7,12 @@
     "source_zip_sha256": "72297163d4c7e34ce6f97bdbc929eafe56231f9c76b93bb5b554b52fd631932f",
     "weight": "PWSSWGT / 10000 (four implied decimal places)"
   },
-  "population": "California civilian noninstitutional U.S. citizens age 18 or older who reported voting in the November 2020 election",
+  "state": "GA",
+  "population": "Georgia civilian noninstitutional U.S. citizens age 18 or older who reported voting in the November 2020 election",
   "population_role": "Reported voters. Self-reported participation, not a validated vote record or a legal-eligibility count",
   "filters": {
     "HRINTSTA": 1,
-    "GESTFIPS": 6,
+    "GESTFIPS": 13,
     "PRPERTYP": 2,
     "PRTAGE": ">=18",
     "PRCITSHP": [
@@ -22,25 +23,25 @@
     ],
     "PES1": 1
   },
-  "unweighted_cps_count": 4263,
-  "population_estimate": 16893487.7694,
+  "unweighted_cps_count": 1209,
+  "population_estimate": 4887507.9631,
   "citizen_adult_reference": {
-    "unweighted_cps_count": 6499,
-    "population_estimate": 25946400.1379,
-    "reported_turnout_rate": 0.6510917768790446
+    "unweighted_cps_count": 1819,
+    "population_estimate": 7399524.8963,
+    "reported_turnout_rate": 0.6605164563395024
   },
   "published_table_checks": [
     {
-      "table": "Table 4a, California total voted",
-      "published_thousands": 16893,
-      "computed_population_estimate": 16893487.7694,
-      "difference_persons_from_published_rounded_thousands": 487.7694000005722
+      "table": "Table 4a, Georgia total voted",
+      "published_thousands": 4888,
+      "computed_population_estimate": 4887507.9631,
+      "difference_persons_from_published_rounded_thousands": -492.0368999997154
     },
     {
-      "table": "Table 4a, California total citizen population",
-      "published_thousands": 25946,
-      "computed_population_estimate": 25946400.1379,
-      "difference_persons_from_published_rounded_thousands": 400.13789999857545
+      "table": "Table 4a, Georgia total citizen population",
+      "published_thousands": 7400,
+      "computed_population_estimate": 7399524.8963,
+      "difference_persons_from_published_rounded_thousands": -475.1036999998614
     }
   ],
   "category_mapping": {
@@ -53,80 +54,80 @@
   "margins": {
     "age_group": {
       "18-29": {
-        "proportion": 0.19513879619762398,
-        "population_estimate": 3296574.8669,
-        "unweighted_cps_count": 735
+        "proportion": 0.18045336021111966,
+        "population_estimate": 881967.235,
+        "unweighted_cps_count": 192
       },
       "30-44": {
-        "proportion": 0.23792491846950056,
-        "population_estimate": 4019381.7002,
-        "unweighted_cps_count": 986
+        "proportion": 0.223261684674144,
+        "population_estimate": 1091193.2617,
+        "unweighted_cps_count": 273
       },
       "45-64": {
-        "proportion": 0.3275796073457333,
-        "population_estimate": 5533962.0902,
-        "unweighted_cps_count": 1414
+        "proportion": 0.36477455974704925,
+        "population_estimate": 1782838.5655,
+        "unweighted_cps_count": 434
       },
       "65+": {
-        "proportion": 0.23935667798714214,
-        "population_estimate": 4043569.1121,
-        "unweighted_cps_count": 1128
+        "proportion": 0.23151039536768708,
+        "population_estimate": 1131508.9009,
+        "unweighted_cps_count": 310
       }
     },
     "sex": {
       "male": {
-        "proportion": 0.4742410281914535,
-        "population_estimate": 8011585.0095,
-        "unweighted_cps_count": 1995
+        "proportion": 0.4460852193306987,
+        "population_estimate": 2180245.0617,
+        "unweighted_cps_count": 543
       },
       "female": {
-        "proportion": 0.5257589718085465,
-        "population_estimate": 8881902.7599,
-        "unweighted_cps_count": 2268
+        "proportion": 0.5539147806693013,
+        "population_estimate": 2707262.9014,
+        "unweighted_cps_count": 666
       }
     },
     "race_ethnicity": {
       "hispanic": {
-        "proportion": 0.26867164249062603,
-        "population_estimate": 4538801.1064,
-        "unweighted_cps_count": 1045
+        "proportion": 0.036393150526384255,
+        "population_estimate": 177871.813,
+        "unweighted_cps_count": 39
       },
       "nh_white": {
-        "proportion": 0.51564619486562,
-        "population_estimate": 8711062.6863,
-        "unweighted_cps_count": 2331
+        "proportion": 0.6029915859268956,
+        "population_estimate": 2947126.1779,
+        "unweighted_cps_count": 773
       },
       "nh_black": {
-        "proportion": 0.06456030079090863,
-        "population_estimate": 1090648.6518,
-        "unweighted_cps_count": 252
+        "proportion": 0.3229361123943618,
+        "population_estimate": 1578352.8209,
+        "unweighted_cps_count": 354
       },
       "nh_asian": {
-        "proportion": 0.1286149671316315,
-        "population_estimate": 2172755.3742,
-        "unweighted_cps_count": 559
+        "proportion": 0.023699842879955225,
+        "population_estimate": 115833.1708,
+        "unweighted_cps_count": 29
       },
       "nh_other": {
-        "proportion": 0.022506894721213873,
-        "population_estimate": 380219.9507,
-        "unweighted_cps_count": 76
+        "proportion": 0.013979308272403129,
+        "population_estimate": 68323.9805,
+        "unweighted_cps_count": 14
       }
     },
     "education": {
       "hs_or_less": {
-        "proportion": 0.25873811841373495,
-        "population_estimate": 4370989.2389,
-        "unweighted_cps_count": 1088
+        "proportion": 0.29725222628149295,
+        "population_estimate": 1452822.623,
+        "unweighted_cps_count": 368
       },
       "some_college_or_associate": {
-        "proportion": 0.31092241735979625,
-        "population_estimate": 5252564.0549,
-        "unweighted_cps_count": 1302
+        "proportion": 0.29059605302395297,
+        "population_estimate": 1420290.5232,
+        "unweighted_cps_count": 351
       },
       "bachelors_or_higher": {
-        "proportion": 0.43033946422646885,
-        "population_estimate": 7269934.4756,
-        "unweighted_cps_count": 1873
+        "proportion": 0.4121517206945541,
+        "population_estimate": 2014394.8169,
+        "unweighted_cps_count": 490
       }
     }
   },

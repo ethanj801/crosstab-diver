@@ -33,7 +33,7 @@ Each opening or refresh starts fresh. Edits persist throughout the current sessi
 ## Capabilities and Constraints
 
 - Keep the project small and self-contained, within the agreed roughly two-to-three-hour scope.
-- Use a default sample of 600 records with binary D/R preferences, sourced from California CES 2020 presidential preferences. Sample size is configurable in the preparation script, not a requested interface control.
+- Use a default sample of 600 records with binary D/R preferences, sourced from Georgia CES 2020 presidential preferences. Sample size is configurable in the preparation script, not a requested interface control.
 - Show race/ethnicity, age, education, and sex filters together. Each chooses one category or All; conditions across dimensions form an intersection.
 - Compare original and current margins under the same selected weighting mode. Raking off means equal weights. Show subgroup record counts and expose individual weights.
 - Preserve respondent positions after preference edits. Selection and editing are separate actions; selected and changed records have distinct indicators. Paginate large groups.
@@ -44,7 +44,7 @@ Each opening or refresh starts fresh. Edits persist throughout the current sessi
 
 ## Evidence on Hand
 
-- [Sample and calibration data](data/california-2020/README.md): CES pre-election preferences, including reported early votes, restricted to source Biden/Trump responses; California demographic targets from CPS reported voters. The populations differ. The 600 resampled records include repeated source respondents with distinct demo IDs.
+- [Sample and calibration data](data/georgia-2020/README.md): CES pre-election preferences, including reported early votes, restricted to source Biden/Trump responses; Georgia demographic targets from CPS reported voters. The populations differ. The 600 resampled records include repeated source respondents with distinct demo IDs.
 - [Preparation scripts](scripts/): sampling, CPS target extraction, and demographic weight preparation are implemented. The browser app is in `src/`; `npm run build` generates `dist/index.html`.
 - [Exploratory mockups](mockups/poll-layouts.html): structural references with invented values and older labels; later decisions supersede them.
 

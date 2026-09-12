@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
-"""Compute California citizen-adult raking margins from the Nov. 2020 CPS public-use file."""
+"""Compute state citizen-adult raking margins from the Nov. 2020 CPS public-use file."""
 
 import argparse
 from collections import Counter
 import hashlib
 import json
 from pathlib import Path
+import sys
 import zipfile
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sample_ces import STATES
 
+
+# Published figures from Census Table 4a, in thousands. Every entry must be read
+# from the published table. An absent state records that no check was configured.
+PUBLISHED_TABLE_4A = {
+    "GA": {"voted_thousands": 4888, "citizen_thousands": 7400},
+}
 SOURCE_URL = "https://www2.census.gov/programs-surveys/cps/datasets/2020/supp/nov20pub.zip"
 LANDING_PAGE = "https://www.census.gov/data/datasets/2020/demo/cps/cps-voting.html"
 DOCUMENTATION_URL = "https://www2.census.gov/programs-surveys/cps/techdocs/cpsnov20.pdf"
@@ -34,9 +43,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True,
                         help=f"Downloaded Nov. 2020 CPS ZIP ({SOURCE_URL})")
-    parser.add_argument("--output", type=Path,
-                        default=Path("data/california-2020/raking_targets_cps_nov2020.json"))
+    parser.add_argument("--state", choices=sorted(STATES), default="GA")
+    parser.add_argument("--output", type=Path, help="default: data/<state>-2020/raking_targets_cps_nov2020.json")
     args = parser.parse_args()
+    state_name = STATES[args.state][1].replace("-", " ").title()
+    if args.output is None:
+        args.output = Path("data") / f"{STATES[args.state][1]}-2020" / "raking_targets_cps_nov2020.json"
     totals = {field: Counter() for field in LABELS}
     raw_counts = {field: Counter() for field in LABELS}
     total_weight, kept, records = 0, 0, 0
@@ -47,7 +59,7 @@ def main():
             if len(line.rstrip(b"\r\n")) != 1018:
                 raise ValueError(f"unexpected record length at record {records}")
             value = {name: int(line[start - 1:end]) for name, (start, end) in FIELDS.items()}
-            if not (value["HRINTSTA"] == 1 and value["GESTFIPS"] == 6 and value["PRPERTYP"] == 2
+            if not (value["HRINTSTA"] == 1 and value["GESTFIPS"] == STATES[args.state][0] and value["PRPERTYP"] == 2
                     and value["PRTAGE"] >= 18 and value["PRCITSHP"] in (1, 2, 3, 4)):
                 continue
             if value["PES1"] not in VOTING_CODES:
@@ -85,6 +97,17 @@ def main():
         }
         for field, categories in LABELS.items()
     }
+    published = PUBLISHED_TABLE_4A.get(args.state)
+    published_checks = [
+        {"table": f"Table 4a, {state_name} total voted",
+         "published_thousands": published["voted_thousands"],
+         "computed_population_estimate": total_weight / 10000,
+         "difference_persons_from_published_rounded_thousands": total_weight / 10000 - published["voted_thousands"] * 1000},
+        {"table": f"Table 4a, {state_name} total citizen population",
+         "published_thousands": published["citizen_thousands"],
+         "computed_population_estimate": citizen_adult_weight / 10000,
+         "difference_persons_from_published_rounded_thousands": citizen_adult_weight / 10000 - published["citizen_thousands"] * 1000},
+    ] if published else "No published Table 4a figures are configured for this state."
     result = {
         "source": {
             "name": "U.S. Census Bureau, November 2020 Current Population Survey Voting and Registration Supplement",
@@ -92,21 +115,15 @@ def main():
             "source_zip_sha256": hashlib.file_digest(args.source.open("rb"), "sha256").hexdigest(),
             "weight": "PWSSWGT / 10000 (four implied decimal places)",
         },
-        "population": "California civilian noninstitutional U.S. citizens age 18 or older who reported voting in the November 2020 election",
+        "state": args.state,
+        "population": f"{state_name} civilian noninstitutional U.S. citizens age 18 or older who reported voting in the November 2020 election",
         "population_role": "Reported voters. Self-reported participation, not a validated vote record or a legal-eligibility count",
-        "filters": {"HRINTSTA": 1, "GESTFIPS": 6, "PRPERTYP": 2, "PRTAGE": ">=18", "PRCITSHP": [1, 2, 3, 4], "PES1": 1},
+        "filters": {"HRINTSTA": 1, "GESTFIPS": STATES[args.state][0], "PRPERTYP": 2, "PRTAGE": ">=18", "PRCITSHP": [1, 2, 3, 4], "PES1": 1},
         "unweighted_cps_count": kept, "population_estimate": total_weight / 10000,
         "citizen_adult_reference": {"unweighted_cps_count": citizen_adults,
                                     "population_estimate": citizen_adult_weight / 10000,
                                     "reported_turnout_rate": total_weight / citizen_adult_weight},
-        "published_table_checks": [
-            {"table": "Table 4a, California total voted", "published_thousands": 16893,
-             "computed_population_estimate": total_weight / 10000,
-             "difference_persons_from_published_rounded_thousands": total_weight / 10000 - 16893000},
-            {"table": "Table 4a, California total citizen population", "published_thousands": 25946,
-             "computed_population_estimate": citizen_adult_weight / 10000,
-             "difference_persons_from_published_rounded_thousands": citizen_adult_weight / 10000 - 25946000},
-        ],
+        "published_table_checks": published_checks,
         "category_mapping": {
             "age_group": "PRTAGE: 18-29, 30-44, 45-64, 65+; topcoded 80 and 85 remain 65+",
             "sex": "PESEX: 1 male; 2 female; source records sex, not gender identity",
@@ -126,7 +143,7 @@ def main():
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
-    print(f"Wrote {args.output} from {kept} California reported-voter CPS records ({citizen_adults} citizen adults)")
+    print(f"Wrote {args.output} from {kept} {state_name} reported-voter CPS records ({citizen_adults} citizen adults)")
 
 
 if __name__ == "__main__":
