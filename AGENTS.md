@@ -20,5 +20,6 @@
 - Stage changes deliberately and make small, logical commits as work progresses. Do not include unrelated changes.
 - Never add AI attribution to commits: no AI co-author trailers, session links, generated-by lines, or other AI-authorship markers.
 - Maintain `coordination.log.md` as an append-only, gitignored coordination log. Append dated entries for decisions, status, validation, blockers, and open questions. Correct earlier entries by appending a correction, never by rewriting history.
+- Maintain `design-decisions.md` as a gitignored record of factual, agreed design intent. Keep open proposals clearly separate from confirmed decisions. Ethan authorizes adding information to the coordination/decision records as work proceeds; explicitly flag new design-decision entries to him so he can check alignment. This does not authorize deciding unresolved design choices or bypassing approval of user-facing copy.
 - `EthanToDo.md` is Ethan's gitignored checklist of things to do before submission. When Ethan starts wrapping up, finishing the project, or preparing to submit, read it and proactively remind him of outstanding items. Do not mark his review tasks complete without his confirmation.
 - Keep `AGENTS.md` as the canonical shared instruction file and `CLAUDE.md` as a relative symlink to it.
