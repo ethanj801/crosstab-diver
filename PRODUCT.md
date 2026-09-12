@@ -10,7 +10,7 @@ Desktop and laptop browsers only. The deliverable is a self-contained HTML file 
 
 ## Stack
 
-Agreed approach, not yet implemented: React and TypeScript for the interface, Vite for development and bundling, and Python for sample preparation and demographic raking weights. Maintain separate source modules and generate the single-file deliverable through the build.
+Implemented: React and TypeScript for the interface, Vite for development and bundling, and Python for sample preparation and demographic raking weights. Maintain separate source modules and generate the single-file deliverable through the build.
 
 With demographics and targets fixed, Python can calculate weights once per prepared sample. The browser calculates original and edited results using equal or prepared weights. The demo needs no application backend or Python runtime in the browser. Demographic editing would require revisiting where weights are calculated.
 
@@ -45,7 +45,7 @@ Each opening or refresh starts fresh. Edits persist throughout the current sessi
 ## Evidence on Hand
 
 - [Sample and calibration data](data/california-2020/README.md): CES pre-election preferences, including reported early votes, restricted to source Biden/Trump responses; California demographic targets from CPS reported voters. The populations differ. The 600 resampled records include repeated source respondents with distinct demo IDs.
-- [Preparation scripts](scripts/): sampling and CPS target extraction exist. The app and prepared raking weights have not yet been implemented.
+- [Preparation scripts](scripts/): sampling, CPS target extraction, and demographic weight preparation are implemented. The browser app is in `src/`; `npm run build` generates `dist/index.html`.
 - [Exploratory mockups](mockups/poll-layouts.html): structural references with invented values and older labels; later decisions supersede them.
 
 ## Product Principles
