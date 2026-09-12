@@ -30,8 +30,8 @@ export function Comparison({ whole, subgroup, subgroupName }: { whole: Result; s
     <div className="comparison-head" aria-hidden="true">
       <span />
       <div className="chart-heading"><span>Margin</span><div className="axis-labels"><span>R +100</span><span>Tie</span><span>D +100</span></div></div>
-      <span><i className="legend-original" />Original</span>
-      <span><i className="legend-current" />Current</span>
+      <span>Original</span>
+      <span>Current</span>
       <span>Change</span>
     </div>
     <div className="results" aria-live="polite" aria-atomic="true">

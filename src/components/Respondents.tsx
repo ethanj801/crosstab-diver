@@ -17,12 +17,16 @@ export function Respondents({ records, count, state, dispatch }: Props) {
           className={`person ${current.toLowerCase()}${changed ? ' changed' : ''}`}
           aria-label={name} title={name} aria-pressed={state.selectedId === record.id}
           onClick={() => dispatch({ type: 'select', id: record.id })}>
-          {current}{changed && <span className="changed-mark" aria-hidden="true" />}
+          {current}
         </button>;
       })}
     </div>
     <div className="pagination">
       <span>{start}–{end} of {count}</span>
+      <div className="voter-legend">
+        <span><i className="voter-legend-original" aria-hidden="true" />Original</span>
+        <span><i className="voter-legend-edited" aria-hidden="true" />Edited</span>
+      </div>
       <div className="page-actions">
         <button type="button" disabled={state.page === 0} onClick={() => dispatch({ type: 'page', page: state.page - 1 })}>Previous</button>
         <button type="button" disabled={end >= count} onClick={() => dispatch({ type: 'page', page: state.page + 1 })}>Next</button>
