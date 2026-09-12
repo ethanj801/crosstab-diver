@@ -20,6 +20,7 @@
 # Git and coordination
 
 - Keep `VISION.md` focused on the audience, purpose, central experience, and intended learning outcomes. Detailed interaction rules, operational requirements, and open implementation choices belong in the decision and coordination records, not the vision.
+- Maintain `PRODUCT.md` as the compact product brief consumed by Impeccable. Consolidate confirmed audience, capabilities, constraints, stack, and evidence; reference detailed decision records and keep the vision separate. Do not reopen settled choices merely to satisfy a skill interview.
 - Stage changes deliberately and make small, logical commits as work progresses. Do not include unrelated changes.
 - Never add AI attribution to commits: no AI co-author trailers, session links, generated-by lines, or other AI-authorship markers.
 - Maintain `coordination.log.md` as an append-only, gitignored coordination log. Append dated entries for decisions, status, validation, blockers, and open questions. Correct earlier entries by appending a correction, never by rewriting history.
