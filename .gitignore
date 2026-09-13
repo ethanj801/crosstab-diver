@@ -6,5 +6,4 @@ future_directions.md
 __pycache__/
 node_modules/
 dist/
-.impeccable/review/
 .playwright-mcp/
