@@ -12,13 +12,13 @@ Open the [standalone HTML file](crosstab-investigator.html) in a desktop or lapt
 
 The demo shows an illustrative mock poll of Georgia in 2020. You can see the overall margin and the margin of any selected subgroup (i.e. a crosstab). You can select respondents, see their demographic information, and change their preference between D and R to watch the margins of both the subgroup and the topline move.
 
-Real polls use **raking** to weight responses. Raking is a process by which pollsters address response bias (different groups participate at rates that don't match their share of the electorate) by reweighting the value of each respondent. You can turn on raking in the demo by using the toggle in the top right. Notice how the poll moves after you do so. You'll also notice that some respondents will now move the topline and their subgroup more or less sharply than before. You can see the weighting of respondent on their breakdown screen. Weights are normalized to have an average of 1; higher weight means more influence on the poll.
+Real polls use **raking** to weight responses. Raking is a process by which pollsters address response bias (different groups participate at rates that don't match their share of the electorate) by reweighting the value of each respondent. You can turn on raking in the demo by using the toggle in the top right. Notice how the poll moves after you do so. You'll also notice that some respondents will now move the topline and their subgroup more or less sharply than before. You can see the weighting of each respondent on their breakdown screen. Weights are normalized to have an average of 1; higher weight means more influence on the poll.
 
 ## Data and weighting
 
-The demo uses a mock poll of 600 people (typical size for a state poll) from the state Georgia in 2020. The mock poll was constructed using respondents from the 2020 Cooperative Election Study (CES). We construct the poll by sampling (with replacement using the CES survey weights) from the set of voters who report a preference or known early vote for either Biden or Trump. When both early votes and preferences are given, we use the early vote. Undecided, other-candidate, intended nonvoting, and missing responses are excluded for simplicity of modeling. 
+The demo uses a mock poll of 600 people (typical size for a state poll) from the state of Georgia in 2020. The mock poll is constructed using respondents from the 2020 Cooperative Election Study (CES). We construct the poll by sampling (with replacement using the CES survey weights) from the set of voters who report either a preference or an early vote for Biden or Trump. When both early votes and preferences are given, we use the early vote. Undecided, other-candidate, intended nonvoting, and missing responses are excluded for simplicity of modeling. 
 
-Raking data is precomputed. Our raking targets Georgia adults who reported voting in the Census Bureau's November 2020 Current Population Survey (CPS) Voting and Registration Supplement. The demo matches age, sex, race/ethnicity, and education proportions. As is typical for a poll of this size, we rake only against the individual categories and not against interactions.
+Raking data is precomputed. Our raking targets Georgia adults who reported in the Census Bureau's November 2020 Current Population Survey (CPS) Voting and Registration Supplement that they voted. The demo matches age, sex, race/ethnicity, and education proportions. As is typical for a poll of this size, we rake only against the individual categories and not against interactions.
 
 It is important to note that this poll is designed to be an illustrative exercise in sensitivity to individual responses, and not an actual replication of a Georgia poll or a diagnostic aid. 
 
@@ -39,7 +39,7 @@ npm run build
 
 The output can be found at `dist/index.html`.
 
-Prepared data for Georgia is included, but the underlying sample or weighting can be changed using the scripts folder. States or sample sizes can be changed relatively easily, but beware, some states have significantly fewer respondents than others, making sampling tricky (e.g. sampling 1000 voters from a state with 600 respondents is less than ideal).
+Prepared data for Georgia is included, but the underlying sample or weighting can be changed using the scripts in the `scripts/` folder. States or sample sizes can be changed relatively easily, but beware, some states have significantly fewer respondents than others, making sampling tricky (e.g. sampling 1000 voters from a state with 600 respondents is less than ideal).
 
 - `scripts/sample_ces.py` draws the sample and exposes sample-size and seed options.
 - `scripts/extract_cps_targets.py` extracts demographic calibration targets.
