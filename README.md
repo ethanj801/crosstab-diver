@@ -8,7 +8,7 @@ Change a few presidential preferences and compare the movement in a demographic 
 
 ## Using the demo
 
-Open the [standalone HTML file](crosstab-investigator.html) in a desktop or laptop browser.
+Open the [standalone HTML file](crosstab-investigator.html) in a desktop or laptop browser. Or go to https://ethanj801.github.io/crosstab-investigator/
 
 The demo shows an illustrative mock poll of Georgia in 2020. You can see the overall margin and the margin of any selected subgroup (i.e. a crosstab). You can select respondents, see their demographic information, and change their preference between D and R to watch the margins of both the subgroup and the topline move.
 
